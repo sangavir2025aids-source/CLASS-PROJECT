@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -20,11 +21,27 @@ function Login() {
   const formsubmit = (event) => {
     event.preventDefault();
 
-    console.log(formdata);
+    const saveddata = JSON.parse(localStorage.getItem("registerdata"));
 
-    navigate("/dashboard", {
-      state: formdata
-    });
+    if (!saveddata) {
+      alert("Please register first");
+      navigate("/register");
+      return;
+    }
+
+    if (
+      formdata.username === saveddata.email &&
+      formdata.password === saveddata.password
+    ) {
+      alert("Login success");
+
+      navigate("/dashboard", {
+        state: saveddata
+      });
+
+    } else {
+      alert("Invalid email or password");
+    }
   };
 
   return (
@@ -32,8 +49,8 @@ function Login() {
       <form onSubmit={formsubmit}>
 
         <input
-          type="text"
-          placeholder="Enter your username"
+          type="email"
+          placeholder="Enter your email"
           required
           name="username"
           value={formdata.username}
