@@ -1,7 +1,16 @@
+import { useState } from "react";
+import { useLocation } from "react-router-dom";
+
 function Dashboard() {
+    const location = useLocation();
+    const[userdata, setuserdata] = useState("");
+    function displaydata(){
+        setUserdata(location.state);
+        console.log(userdata)
+    }
     return (
         <>
-            <h1>Welcome to Dashboard Page</h1>
+            <button onClick={displaydata}> button</button>
             
         </>
     );
